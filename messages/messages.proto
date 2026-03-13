@@ -18,3 +18,29 @@
 syntax = "proto3";
 
 package axiom_content_gen;
+
+// A request to generate written content.
+message ContentSpec {
+  // The topic to write about.
+  string topic = 1;
+  // Specific requirements: tone, length, target audience, format, etc.
+  string requirements = 2;
+}
+
+// Accumulated state carried through the write-critique loop.
+message ContentDraft {
+  // The topic carried through from ContentSpec.
+  string topic = 1;
+  // The requirements carried through from ContentSpec.
+  string requirements = 2;
+  // The current draft content. Empty before the first ContentWriter pass.
+  string content = 3;
+  // Feedback from the most recent ContentCritic pass. Empty on the first pass.
+  string feedback = 4;
+  // Quality score 1-10 from the most recent ContentCritic pass. 0 on first pass.
+  int32 quality_score = 5;
+  // Which write-critique iteration this is. 0 after ContentSetup.
+  int32 iteration = 6;
+  // True when ContentCritic scores the content 8 or above.
+  bool approved = 7;
+}

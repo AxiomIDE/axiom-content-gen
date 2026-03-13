@@ -1,12 +1,23 @@
 name: axiom-content-gen
 version: 0.1.0
 language: python
-
-# nodes:
-#   - name: MyNode
-#     input: MyInput
-#     output: MyOutput
-#     # required_secrets lists the secret names this node reads via axiom.Secrets.
-#     # These are validated during publish and shown in the marketplace.
-#     # required_secrets:
-#     #   - MY_API_KEY
+description: Content generation nodes for the write-critique-improve loop pattern.
+author: Axiom
+license: MIT
+nodes:
+  - name: ContentSetup
+    input: ContentSpec
+    output: ContentDraft
+    description: Initialises a ContentDraft from a ContentSpec with empty content and zero scores, ready to enter the write-critique loop.
+  - name: ContentWriter
+    input: ContentDraft
+    output: ContentDraft
+    description: Writes or rewrites content using an LLM. On the first pass produces a fresh draft; on subsequent passes incorporates critic feedback to improve the content.
+    required_secrets:
+      - ANTHROPIC_API_KEY
+  - name: ContentCritic
+    input: ContentDraft
+    output: ContentDraft
+    description: Scores content quality 1-10 and provides specific improvement feedback. Sets approved=true when quality_score reaches 8 or above.
+    required_secrets:
+      - ANTHROPIC_API_KEY
