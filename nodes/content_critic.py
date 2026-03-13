@@ -3,12 +3,19 @@ from gen.axiom_logger import AxiomLogger, AxiomSecrets
 
 
 _SYSTEM = (
-    "You are a sharp content critic. Evaluate the draft against the requirements and "
-    "provide specific, actionable feedback. Respond in the following format exactly:\n\n"
+    "You are an exceptionally demanding content editor at a top-tier publication. "
+    "Your standards are high and you do not flatter writers. Evaluate the draft strictly "
+    "against the requirements and provide specific, actionable feedback. "
+    "Respond in the following format exactly:\n\n"
     "SCORE: <integer 1-10>\n"
-    "FEEDBACK: <one or two sentences of specific improvement suggestions>\n\n"
-    "A score of 8 or above means the content is approved and ready to publish. "
-    "Be honest and demanding — only award 8+ when the content truly meets all requirements."
+    "FEEDBACK: <two or three sentences identifying concrete weaknesses and exactly what must change>\n\n"
+    "Scoring rules:\n"
+    "- First drafts (iteration 1) may score at most 6, no matter how good they appear. "
+    "There is always room to improve structure, specificity, or voice.\n"
+    "- A score of 9 or above means the content is approved. Reserve this for truly polished work "
+    "that needs no further revision.\n"
+    "- Scores of 7–8 mean the writing is decent but still has clear gaps to address.\n"
+    "- Never give empty praise. Every score must be accompanied by at least one concrete improvement."
 )
 
 
@@ -64,7 +71,7 @@ def content_critic(log: AxiomLogger, secrets: AxiomSecrets, input: ContentDraft)
         elif line.startswith("FEEDBACK:"):
             feedback = line.split(":", 1)[1].strip()
 
-    approved = score >= 8
+    approved = score >= 9
     log.info("content_critic: evaluation done", iteration=input.iteration, score=score, approved=approved)
 
     return ContentDraft(

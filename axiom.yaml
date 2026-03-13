@@ -18,6 +18,6 @@ nodes:
   - name: ContentCritic
     input: ContentDraft
     output: ContentDraft
-    description: Scores content quality 1-10 and provides specific improvement feedback. Sets approved=true when quality_score reaches 8 or above.
+    description: Scores content quality 1-10 and provides specific improvement feedback. Sets approved=true when quality_score reaches 9 or above.
     required_secrets:
       - ANTHROPIC_API_KEY
