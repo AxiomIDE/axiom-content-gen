@@ -1,4 +1,4 @@
-name: axiom-content-gen
+name: christian/axiom-content-gen
 version: 0.1.0
 language: python
 description: Content generation nodes for the write-critique-improve loop pattern.
